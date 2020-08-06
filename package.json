@@ -1,0 +1,39 @@
+{
+  "name": "echoes",
+  "version": "1.0.0",
+  "description": "Server for Social Media Manager for managing different social media account activities in one place ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubhambattoo/echoes.git"
+  },
+  "keywords": [
+    "javascript",
+    "reactjs",
+    "nodejs",
+    "twitter-api",
+    "social-media-tool",
+    "firebase"
+  ],
+  "author": "shubhambattoo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shubhambattoo/echoes/issues"
+  },
+  "homepage": "https://github.com/shubhambattoo/echoes#readme",
+  "private": "true",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "twitter-lite": "^0.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
