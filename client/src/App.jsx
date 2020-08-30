@@ -1,11 +1,17 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Header from './components/Header';
 
 function App() {
   return (
-    <>
-      <h1>Let's Echo</h1>
-    </>
+    <Router>
+      <Header />
+      <Switch>
+        <Route exact={true} path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 
