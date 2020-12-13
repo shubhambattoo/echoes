@@ -5,16 +5,18 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Router>
       <Header />
-      <Box bg="gray.100" as="main" height="80vh">
+      <Box as="main" minHeight="80vh">
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
         </Switch>
       </Box>
     </Router>

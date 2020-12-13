@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Stack, Link } from '@chakra-ui/react';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // import { ColorModeSwitcher } from './../ColorModeSwitcher';
@@ -19,7 +19,14 @@ const Header: React.FC = () => {
     >
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg">
-          Echoes
+          <Link
+            to="/"
+            as={RouterLink}
+            _hover={{ textDecor: 'none' }}
+            _focus={{ outline: 'none' }}
+          >
+            Echoes
+          </Link>
         </Heading>
       </Flex>
 
