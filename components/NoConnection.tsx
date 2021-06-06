@@ -1,5 +1,6 @@
 import { Box, Container, Flex, Heading } from '@chakra-ui/layout';
 import { Button, Image } from '@chakra-ui/react';
+import Link from 'next/link';
 
 const NoConnection = () => {
   return (
@@ -16,16 +17,11 @@ const NoConnection = () => {
           <Heading as="h2" size="md" textAlign="center">
             Let's get your account set up
           </Heading>
-          <Button
-            mt="4"
-            colorScheme="purple"
-            paddingY="1.5rem"
-            paddingX="4"
-            // as={Link}
-            // to="/accounts/new"
-          >
-            Connect Your Accounts
-          </Button>
+          <Link href="/accounts/new" passHref>
+            <Button mt="4" colorScheme="purple" paddingY="1.5rem" paddingX="4">
+              Connect Your Accounts
+            </Button>
+          </Link>
         </Box>
       </Flex>
     </Container>

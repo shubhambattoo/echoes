@@ -68,10 +68,16 @@ const Signup: React.FC = () => {
             </Box>
             <Text textAlign="left" mt="2" fontSize="sm">
               Illustration by{' '}
-              <a href="https://icons8.com/illustrations/author/5dbbfa4a01d0360016456d51">
+              <ChakraLink
+                href="https://icons8.com/illustrations/author/5dbbfa4a01d0360016456d51"
+                isExternal
+              >
                 Murat Kalkavan
-              </a>{' '}
-              from <a href="https://icons8.com/illustrations">Ouch!</a>
+              </ChakraLink>{' '}
+              from{' '}
+              <ChakraLink href="https://icons8.com/illustrations" isExternal>
+                Ouch!
+              </ChakraLink>
             </Text>
           </Box>
           <Box w="100%" h="100%">
@@ -159,9 +165,9 @@ const Signup: React.FC = () => {
                   <Box mt={3}>
                     <Text fontSize="sm">
                       Already have a account?{' '}
-                      <ChakraLink href="/login" as={Link}>
-                        Sign In
-                      </ChakraLink>
+                      <Link href="/login" passHref>
+                        <ChakraLink>Sign In</ChakraLink>
+                      </Link>
                     </Text>
                   </Box>
                 </Box>

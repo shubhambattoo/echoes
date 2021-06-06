@@ -16,6 +16,7 @@ import {
   FormErrorMessage,
   FormErrorIcon,
   Image,
+  textDecoration,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { useState } from 'react';
@@ -61,9 +62,9 @@ const Login: React.FC = () => {
                   </Heading>
                   <Text fontSize="sm">
                     Need a new Account?{' '}
-                    <ChakraLink href="/signup" as={Link}>
-                      Sign Up
-                    </ChakraLink>
+                    <Link href="/signup" passHref>
+                      <ChakraLink>Sign Up</ChakraLink>
+                    </Link>
                   </Text>
                 </Stack>
                 <Stack spacing={3} mb={6}>
@@ -139,9 +140,9 @@ const Login: React.FC = () => {
                   </Button>
                   <Box mt={3}>
                     <Text fontSize="sm">
-                      <ChakraLink href="/forgot-password" as={Link}>
-                        Forgot Password?
-                      </ChakraLink>
+                      <Link href="/forgot-password" passHref>
+                        <ChakraLink>Forgot Password?</ChakraLink>
+                      </Link>
                     </Text>
                   </Box>
                 </Box>
@@ -166,10 +167,16 @@ const Login: React.FC = () => {
             </Box>
             <Text textAlign="right" mt="2" fontSize="sm">
               Illustration by{' '}
-              <a href="https://icons8.com/illustrations/author/5dbbfa4a01d0360016456d51">
+              <ChakraLink
+                href="https://icons8.com/illustrations/author/5dbbfa4a01d0360016456d51"
+                isExternal
+              >
                 Murat Kalkavan
-              </a>{' '}
-              from <a href="https://icons8.com/illustrations">Ouch!</a>
+              </ChakraLink>{' '}
+              from{' '}
+              <ChakraLink href="https://icons8.com/illustrations" isExternal>
+                Ouch!
+              </ChakraLink>
             </Text>
           </Box>
         </Grid>

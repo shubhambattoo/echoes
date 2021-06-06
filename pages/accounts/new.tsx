@@ -1,8 +1,3 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-} from '@chakra-ui/breadcrumb';
 import { Box, Heading, Stack } from '@chakra-ui/layout';
 import React from 'react';
 import {
@@ -10,6 +5,10 @@ import {
   FaInstagramSquare,
   FaTwitterSquare,
 } from 'react-icons/fa';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
+import AccountLayout from '../../components/AccountLayout';
+import { useRouter } from 'next/dist/client/router';
+import Link from 'next/link';
 
 function SocialIcon({ type, color }: { type: string; color: string }) {
   const fontsize = '40px';
@@ -25,7 +24,7 @@ function SocialIcon({ type, color }: { type: string; color: string }) {
 }
 
 const Connect = () => {
-
+  const { pathname } = useRouter();
   const accountsList = [
     {
       name: 'Twitter',
@@ -48,68 +47,72 @@ const Connect = () => {
   ];
 
   return (
-    <Box paddingX="1rem">
-      {/* <Breadcrumb separator=">">
-        <BreadcrumbItem isCurrentPage fontSize="sm">
-          <BreadcrumbLink as={Link} to="/accounts" textColor="teal.300">
+    <AccountLayout>
+      <Breadcrumb separator=">">
+        <BreadcrumbItem fontSize="sm">
+          <BreadcrumbLink
+            as={Link}
+            href={pathname.substring(0, 9)}
+            textColor="teal.300"
+          >
             Accounts
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage fontSize="sm">
-          <BreadcrumbLink as={Link} to={url} textColor="teal.300">
-            Connect
-          </BreadcrumbLink>
+          <BreadcrumbLink textColor="teal.300">New</BreadcrumbLink>
         </BreadcrumbItem>
-      </Breadcrumb> */}
-      <Box mt={6}>
-        <Heading as="h2" size="lg">
-          Connect a new Account
-        </Heading>
-      </Box>
+      </Breadcrumb>
+      <Box>
+        <Box mt={6}>
+          <Heading as="h2" size="lg">
+            Connect a new Account
+          </Heading>
+        </Box>
 
-      <Stack spacing={6} mt="6" direction="row">
-        {accountsList.map((item) => (
-          <Box
-            w="250px"
-            borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
-            cursor="pointer"
-            boxShadow=".5px .5px 2px .5px rgba(0,0,0,0.2)"
-            _hover={{
-              borderColor: 'lightblue',
-            }}
-            key={item.name}
-          >
+        <Stack spacing={6} mt="6" direction="row">
+          {accountsList.map((item) => (
             <Box
-              p="4"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
+              w="250px"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              cursor="pointer"
+              boxShadow=".5px .5px 2px .5px rgba(0,0,0,0.2)"
+              _hover={{
+                borderColor: 'lightblue',
+              }}
+              key={item.name}
             >
-              <SocialIcon type={item.icon} color={item.iconColor} />
               <Box
-                mt="1"
-                fontWeight="semibold"
-                as="h4"
-                lineHeight="tight"
-                isTruncated
-                fontSize="xl"
+                p="4"
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
               >
-                {item.name}
-              </Box>
-              <Box mt="1" color="gray.600" fontSize="sm">
-                {item.for}
-              </Box>
+                <SocialIcon type={item.icon} color={item.iconColor} />
+                <Box
+                  mt="1"
+                  fontWeight="semibold"
+                  as="h4"
+                  lineHeight="tight"
+                  isTruncated
+                  fontSize="xl"
+                >
+                  {item.name}
+                </Box>
+                <Box mt="1" color="gray.600" fontSize="sm">
+                  {item.for}
+                </Box>
 
-              <Box mt="6" color="gray.600" fontSize="md">
-                Connect
+                <Box mt="6" color="gray.600" fontSize="md">
+                  Connect
+                </Box>
               </Box>
             </Box>
-          </Box>
-        ))}
-      </Stack>
-    </Box>
+          ))}
+        </Stack>
+      </Box>
+    </AccountLayout>
   );
 };
 

@@ -41,9 +41,9 @@ const ForgotPassword: React.FC = () => {
               <Box mt={8}>
                 <Text fontSize="md">
                   Don't have an account?{' '}
-                  <ChakraLink href="/signup" as={Link}>
-                    Sign Up
-                  </ChakraLink>
+                  <Link href="/signup" passHref>
+                    <ChakraLink>Sign Up</ChakraLink>
+                  </Link>
                 </Text>
               </Box>
             </form>
