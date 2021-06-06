@@ -23,6 +23,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
+import { useAuth } from '../context/auth';
+import { useRouter } from 'next/dist/client/router';
 
 const emailRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -33,6 +35,8 @@ type FormData = {
 };
 
 const Signup: React.FC = () => {
+  const { createUserWithEmailAndPassword } = useAuth();
+  const { push } = useRouter();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
@@ -40,8 +44,23 @@ const Signup: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const registerSubmit: any = (data: { email: string; password: string }) =>
-    console.log(data);
+  const registerSubmit: any = ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    console.log({ email, password });
+    createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        // route to dashboard
+        push('/dashboard');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   function handleShowPassword(): void {
     setIsPasswordShown(!isPasswordShown);

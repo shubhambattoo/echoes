@@ -9,6 +9,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import AccountLayout from '../../components/AccountLayout';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
+import PvtRoute from '../../components/PvtRoute';
 
 function SocialIcon({ type, color }: { type: string; color: string }) {
   const fontsize = '40px';
@@ -47,72 +48,74 @@ const Connect = () => {
   ];
 
   return (
-    <AccountLayout>
-      <Breadcrumb separator=">">
-        <BreadcrumbItem fontSize="sm">
-          <BreadcrumbLink
-            as={Link}
-            href={pathname.substring(0, 9)}
-            textColor="teal.300"
-          >
-            Accounts
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage fontSize="sm">
-          <BreadcrumbLink textColor="teal.300">New</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
-      <Box>
-        <Box mt={6}>
-          <Heading as="h2" size="lg">
-            Connect a new Account
-          </Heading>
-        </Box>
-
-        <Stack spacing={6} mt="6" direction="row">
-          {accountsList.map((item) => (
-            <Box
-              w="250px"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              cursor="pointer"
-              boxShadow=".5px .5px 2px .5px rgba(0,0,0,0.2)"
-              _hover={{
-                borderColor: 'lightblue',
-              }}
-              key={item.name}
+    <PvtRoute>
+      <AccountLayout>
+        <Breadcrumb separator=">">
+          <BreadcrumbItem fontSize="sm">
+            <BreadcrumbLink
+              as={Link}
+              href={pathname.substring(0, 9)}
+              textColor="teal.300"
             >
-              <Box
-                p="4"
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-              >
-                <SocialIcon type={item.icon} color={item.iconColor} />
-                <Box
-                  mt="1"
-                  fontWeight="semibold"
-                  as="h4"
-                  lineHeight="tight"
-                  isTruncated
-                  fontSize="xl"
-                >
-                  {item.name}
-                </Box>
-                <Box mt="1" color="gray.600" fontSize="sm">
-                  {item.for}
-                </Box>
+              Accounts
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem isCurrentPage fontSize="sm">
+            <BreadcrumbLink textColor="teal.300">New</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+        <Box>
+          <Box mt={6}>
+            <Heading as="h2" size="lg">
+              Connect a new Account
+            </Heading>
+          </Box>
 
-                <Box mt="6" color="gray.600" fontSize="md">
-                  Connect
+          <Stack spacing={6} mt="6" direction="row">
+            {accountsList.map((item) => (
+              <Box
+                w="250px"
+                borderWidth="1px"
+                borderRadius="lg"
+                overflow="hidden"
+                cursor="pointer"
+                boxShadow=".5px .5px 2px .5px rgba(0,0,0,0.2)"
+                _hover={{
+                  borderColor: 'lightblue',
+                }}
+                key={item.name}
+              >
+                <Box
+                  p="4"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                >
+                  <SocialIcon type={item.icon} color={item.iconColor} />
+                  <Box
+                    mt="1"
+                    fontWeight="semibold"
+                    as="h4"
+                    lineHeight="tight"
+                    isTruncated
+                    fontSize="xl"
+                  >
+                    {item.name}
+                  </Box>
+                  <Box mt="1" color="gray.600" fontSize="sm">
+                    {item.for}
+                  </Box>
+
+                  <Box mt="6" color="gray.600" fontSize="md">
+                    Connect
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
-        </Stack>
-      </Box>
-    </AccountLayout>
+            ))}
+          </Stack>
+        </Box>
+      </AccountLayout>
+    </PvtRoute>
   );
 };
 

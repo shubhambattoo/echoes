@@ -16,7 +16,6 @@ import {
   FormErrorMessage,
   FormErrorIcon,
   Image,
-  textDecoration,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { useState } from 'react';
@@ -24,6 +23,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
+import { useAuth } from '../context/auth';
+import { useRouter } from 'next/dist/client/router';
 
 const emailRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,6 +35,8 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
+  const { signInWithEmailAndPassword } = useAuth();
+  const { push } = useRouter();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
@@ -43,6 +46,14 @@ const Login: React.FC = () => {
 
   const registerSubmit = ({ email, password }: FormData) => {
     console.log({ email, password });
+    signInWithEmailAndPassword(email, password)
+      .then(() => {
+        // route to dashboard
+        push('/dashboard');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   function handleShowPassword(): void {

@@ -5,15 +5,31 @@ import {
   Heading,
   Stack,
   Link as ChakraLink,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAuth } from '../context/auth';
+import { FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
+import { useRouter } from 'next/dist/client/router';
 // import { ColorModeSwitcher } from './../ColorModeSwitcher';
 
 const Header: React.FC = () => {
+  const { loading, authUser, signOut } = useAuth();
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    signOut().then(() => {
+      router.push('/');
+    });
+  };
 
   return (
     <Flex
@@ -62,31 +78,50 @@ const Header: React.FC = () => {
         display={{ sm: show ? 'block' : 'none', md: 'block' }}
         mt={{ base: 4, md: 0 }}
       >
-        <Stack direction="row" spacing={4}>
-          <Link href="/login" passHref>
-            <Button
-              bg="transparent"
-              paddingY=".5rem"
-              fontSize="14.5px"
-              border="1px"
-              borderColor="grey.200"
-            >
-              Login
-            </Button>
-          </Link>
-          <Link href="/signup" passHref>
-            <Button
-              bg="transparent"
-              paddingY=".5rem"
-              fontSize="14.5px"
-              border="1px"
-              borderColor="grey.200"
-            >
-              Create account
-            </Button>
-          </Link>
-          {/* <ColorModeSwitcher /> */}
-        </Stack>
+        {authUser ? (
+          <>
+            <Menu>
+              <MenuButton as={Button} rightIcon={<FaChevronDown />}>
+                <Box display="flex" alignItems="center" color="gray.500">
+                  {authUser.email}
+                  <Avatar size="sm" ml="2" />
+                </Box>
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleLogout}>
+                  <FaSignOutAlt style={{ marginRight: 10 }} />
+                  <span>Logout</span>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </>
+        ) : (
+          <Stack direction="row" spacing={4}>
+            <Link href="/login" passHref>
+              <Button
+                bg="transparent"
+                paddingY=".5rem"
+                fontSize="14.5px"
+                border="1px"
+                borderColor="grey.200"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link href="/signup" passHref>
+              <Button
+                bg="transparent"
+                paddingY=".5rem"
+                fontSize="14.5px"
+                border="1px"
+                borderColor="grey.200"
+              >
+                Create account
+              </Button>
+            </Link>
+            {/* <ColorModeSwitcher /> */}
+          </Stack>
+        )}
       </Box>
     </Flex>
   );
