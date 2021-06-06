@@ -25,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { useAuth } from '../context/auth';
 import { useRouter } from 'next/dist/client/router';
+import { Status } from '../utils/enums';
 
 const emailRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -37,6 +38,7 @@ type FormData = {
 const Signup: React.FC = () => {
   const { createUserWithEmailAndPassword } = useAuth();
   const { push } = useRouter();
+  const [status, setStatus] = useState(Status.IDLE);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
@@ -51,13 +53,15 @@ const Signup: React.FC = () => {
     email: string;
     password: string;
   }) => {
-    console.log({ email, password });
+    setStatus(Status.PENDING);
     createUserWithEmailAndPassword(email, password)
       .then(() => {
+        setStatus(Status.SUCCESS);
         // route to dashboard
         push('/dashboard');
       })
       .catch((err) => {
+        setStatus(Status.FAIL);
         console.log(err);
       });
   };
@@ -178,6 +182,7 @@ const Signup: React.FC = () => {
                     color="white"
                     _hover={{ bg: 'gray.700' }}
                     type="submit"
+                    disabled={status === Status.PENDING}
                   >
                     Create an Account
                   </Button>

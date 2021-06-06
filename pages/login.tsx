@@ -25,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { useAuth } from '../context/auth';
 import { useRouter } from 'next/dist/client/router';
+import { Status } from '../utils/enums';
 
 const emailRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -37,6 +38,7 @@ type FormData = {
 const Login: React.FC = () => {
   const { signInWithEmailAndPassword } = useAuth();
   const { push } = useRouter();
+  const [status, setStatus] = useState(Status.IDLE);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
@@ -45,13 +47,15 @@ const Login: React.FC = () => {
   } = useForm<FormData>();
 
   const registerSubmit = ({ email, password }: FormData) => {
-    console.log({ email, password });
+    setStatus(Status.PENDING);
     signInWithEmailAndPassword(email, password)
       .then(() => {
+        setStatus(Status.SUCCESS);
         // route to dashboard
         push('/dashboard');
       })
       .catch((err) => {
+        setStatus(Status.FAIL);
         console.log(err);
       });
   };
@@ -146,6 +150,7 @@ const Login: React.FC = () => {
                     color="white"
                     _hover={{ bg: 'gray.700' }}
                     type="submit"
+                    disabled={status === Status.PENDING}
                   >
                     Sign In
                   </Button>
