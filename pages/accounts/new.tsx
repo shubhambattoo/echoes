@@ -10,8 +10,9 @@ import AccountLayout from '../../components/AccountLayout';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import PvtRoute from '../../components/PvtRoute';
+import { Account, SocialIconType } from '../../types';
 
-function SocialIcon({ type, color }: { type: string; color: string }) {
+function SocialIcon({ type, color }: SocialIconType) {
   const fontsize = '40px';
   if (type === 'twitter') {
     return <FaTwitterSquare color={color} fontSize={fontsize} />;
@@ -26,7 +27,7 @@ function SocialIcon({ type, color }: { type: string; color: string }) {
 
 const Connect = () => {
   const { pathname } = useRouter();
-  const accountsList = [
+  const accountsList: Account[] = [
     {
       name: 'Twitter',
       for: 'Profile',
@@ -72,7 +73,7 @@ const Connect = () => {
           </Box>
 
           <Stack spacing={6} mt="6" direction="row">
-            {accountsList.map((item) => (
+            {accountsList.map((item: Account) => (
               <Box
                 w="250px"
                 borderWidth="1px"

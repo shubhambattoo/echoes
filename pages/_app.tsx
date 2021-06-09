@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import { AuthUserProvider } from '../context/auth';
+import { AuthUserProvider } from '../contexts/auth';
 import { AppProps } from 'next/app';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 

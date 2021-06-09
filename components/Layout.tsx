@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import { Box } from '@chakra-ui/layout';
 import Header from './Header';
+import { ReactNode } from 'react';
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <Box as="main" minHeight="80vh">
       <Head>

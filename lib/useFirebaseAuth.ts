@@ -1,28 +1,14 @@
 import { useState, useEffect } from 'react';
 import Firebase from '../firebase';
+import { AppAuthState, firebaseAuthHook } from '../types';
 
-type AuthFn = (
-  email: string,
-  password: string
-) => Promise<Firebase.auth.UserCredential>;
-
-type firebaseAuthHook = {
-  authUser: { uid: string; email: string };
-  loading: boolean;
-  signInWithEmailAndPassword: AuthFn;
-  createUserWithEmailAndPassword: AuthFn;
-  signOut: () => Promise<any>;
-};
-
-const formatAuthUser = (
-  user: Firebase.User
-): { uid: string; email: string } => ({
+const formatAuthUser = (user: Firebase.User): AppAuthState => ({
   uid: user.uid,
   email: user.email,
 });
 
 export default function useFirebaseAuth(): firebaseAuthHook {
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState<AppAuthState>(null);
   const [loading, setLoading] = useState(true);
 
   const authStateChanged = async (authState: Firebase.User) => {

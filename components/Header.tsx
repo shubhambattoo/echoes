@@ -14,7 +14,7 @@ import {
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useAuth } from '../context/auth';
+import { useAuth } from '../contexts/auth';
 import { FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
 import { useRouter } from 'next/dist/client/router';
 // import { ColorModeSwitcher } from './../ColorModeSwitcher';
@@ -37,16 +37,15 @@ const Header: React.FC = () => {
       align="center"
       justify="space-between"
       wrap="wrap"
-      paddingY="1rem"
+      paddingY=".7rem"
       paddingX="1.5rem"
-      bg="gray.100"
       color="black"
       boxShadow="rgba(0, 0, 0, 0.15) 0px 1px 10px -5px"
       borderBottom="1px solid rgb(184, 184, 184)"
     >
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg">
-          <Link href="/" passHref>
+          <Link href={authUser ? '/dashboard' : '/'} passHref>
             <ChakraLink
               _hover={{ textDecor: 'none' }}
               _focus={{ outline: 'none' }}
@@ -54,8 +53,8 @@ const Header: React.FC = () => {
               <Image
                 src="/logo.png"
                 alt="Echoes Brand Logo"
-                width="35"
-                height="35"
+                width="45"
+                height="45"
               />
             </ChakraLink>
           </Link>

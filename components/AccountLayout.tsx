@@ -7,10 +7,11 @@ import {
   VStack,
 } from '@chakra-ui/layout';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import { FaThLarge } from 'react-icons/fa';
 import Layout from './Layout';
 
-const AccountLayout = ({ children }) => {
+const AccountLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Layout>
       <Container maxW="100vw" mt={6} paddingX="1.5rem">
@@ -46,9 +47,7 @@ const AccountLayout = ({ children }) => {
               </Link>
             </VStack>
           </Box>
-          <Box padding="1rem">
-            {children}
-          </Box>
+          <Box padding="1rem">{children}</Box>
         </Flex>
       </Container>
     </Layout>

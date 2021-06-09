@@ -1,6 +1,6 @@
 import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
-import { useAuth } from '../context/auth';
+import { useAuth } from '../contexts/auth';
 
 const PvtRoute = ({ children }) => {
   const { loading, authUser } = useAuth();

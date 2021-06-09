@@ -23,22 +23,16 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
-import { useAuth } from '../context/auth';
+import { useAuth } from '../contexts/auth';
 import { useRouter } from 'next/dist/client/router';
 import { Status } from '../utils/enums';
-
-const emailRegex =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { FormData } from '../types';
+import { emailRegex } from '../utils/constants';
 
 const Signup: React.FC = () => {
   const { createUserWithEmailAndPassword } = useAuth();
   const { push } = useRouter();
-  const [status, setStatus] = useState(Status.IDLE);
+  const [status, setStatus] = useState<Status>(Status.IDLE);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,

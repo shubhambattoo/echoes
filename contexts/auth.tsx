@@ -1,23 +1,10 @@
 import { createContext, useContext, Context } from 'react';
-import Firebase from '../firebase';
 import useFirebaseAuth from '../lib/useFirebaseAuth';
-
-type AuthFn = (
-  email: string,
-  password: string
-) => Promise<Firebase.auth.UserCredential>;
-
-type AuthContextType = {
-  authUser: any,
-  loading: boolean,
-  signInWithEmailAndPassword?: AuthFn;
-  createUserWithEmailAndPassword?: AuthFn;
-  signOut?: () => Promise<any>;
-}
+import { AuthContextType } from '../types';
 
 const AuthUserContext: Context<AuthContextType> = createContext({
   authUser: null,
-  loading: Boolean(true)
+  loading: Boolean(true),
 });
 
 export function AuthUserProvider({ children }) {

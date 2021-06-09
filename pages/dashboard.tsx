@@ -15,7 +15,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import NoConnection from '../components/NoConnection';
 import PvtRoute from '../components/PvtRoute';
-import { useAuth } from '../context/auth';
+import { useAuth } from '../contexts/auth';
 
 const Dashboard: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
