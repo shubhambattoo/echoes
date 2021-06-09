@@ -65,3 +65,14 @@ export type Account = {
   icon: string;
   iconColor: string;
 };
+
+export type Tweets = {
+  text: string;
+  mediaUrl: string;
+  created: number;
+  user: string;
+  isScheduled: Boolean;
+  scheduledTime: Date;
+  mediaId: string | Number;
+  postId: string | Number;
+};

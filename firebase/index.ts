@@ -1,4 +1,5 @@
 import Firebase from 'firebase';
+import firestore from 'firebase/firestore';
 import 'firebase/auth';
 
 const FirebaseCredentials = {
@@ -16,3 +17,4 @@ if (!Firebase.apps.length) {
 }
 
 export default Firebase;
+export const db = Firebase.firestore();

@@ -28,6 +28,7 @@ import { useRouter } from 'next/dist/client/router';
 import { Status } from '../utils/enums';
 import { FormData } from '../types';
 import { emailRegex } from '../utils/constants';
+import useUsers from '../lib/useUsers';
 
 const Signup: React.FC = () => {
   const { createUserWithEmailAndPassword } = useAuth();
@@ -39,25 +40,21 @@ const Signup: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const { createUser } = useUsers();
 
-  const registerSubmit: any = ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
+  const registerSubmit: any = async ({ email, password }: FormData) => {
     setStatus(Status.PENDING);
-    createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        setStatus(Status.SUCCESS);
-        // route to dashboard
-        push('/dashboard');
-      })
-      .catch((err) => {
-        setStatus(Status.FAIL);
-        console.log(err);
-      });
+    try {
+      await createUserWithEmailAndPassword(email, password);
+      const user = { email, accountsConnected: [] };
+      await createUser(user);
+      setStatus(Status.SUCCESS);
+      // route to dashboard
+      push('/dashboard');
+    } catch (error) {
+      setStatus(Status.FAIL);
+      console.log(error);
+    }
   };
 
   function handleShowPassword(): void {
