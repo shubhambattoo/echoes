@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import { AuthUserProvider } from '../contexts/auth';
 import { AppProps } from 'next/app';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { UserContextProvider } from '../contexts/user';
 
 const theme = extendTheme({
   sizes: {
@@ -13,9 +14,11 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthUserProvider>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <UserContextProvider>
+        <ChakraProvider theme={theme}>
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </UserContextProvider>
     </AuthUserProvider>
   );
 }
