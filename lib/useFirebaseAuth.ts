@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import Firebase from '../firebase';
+import Firebase, { app } from '../firebase';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { AppAuthState, firebaseAuthHook } from '../types';
 
 const formatAuthUser = (user: Firebase.User): AppAuthState => ({
@@ -11,7 +12,7 @@ export default function useFirebaseAuth(): firebaseAuthHook {
   const [authUser, setAuthUser] = useState<AppAuthState>(null);
   const [loading, setLoading] = useState(true);
 
-  const authStateChanged = async (authState: Firebase.User) => {
+  const authStateChanged = (authState: Firebase.User) => {
     if (!authState) {
       setAuthUser(null);
       setLoading(false);
@@ -45,7 +46,8 @@ export default function useFirebaseAuth(): firebaseAuthHook {
 
   // listen for Firebase state change
   useEffect(() => {
-    const unsubscribe = Firebase.auth().onAuthStateChanged(authStateChanged);
+    const auth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, authStateChanged);
     return () => unsubscribe();
   }, []);
 

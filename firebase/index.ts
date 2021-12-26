@@ -1,7 +1,8 @@
-import Firebase from 'firebase';
-import firestore from 'firebase/firestore';
-import 'firebase/auth';
+import Firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 
+let app;
 const FirebaseCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -13,8 +14,9 @@ const FirebaseCredentials = {
 };
 // if a Firebase instance doesn't exist, create one
 if (!Firebase.apps.length) {
-  Firebase.initializeApp(FirebaseCredentials);
+  app = Firebase.initializeApp(FirebaseCredentials);
 }
 
 export default Firebase;
-export const db = Firebase.firestore();
+const db = Firebase.firestore();
+export { app, db };
