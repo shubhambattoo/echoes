@@ -17,12 +17,24 @@ export default function useUsers() {
         .collection('users')
         .where('email', '==', email)
         .get();
-      const users: any[] = snapshot.docs.map((d) => ({ ...d.data(), id: d.id }));
+      const users: any[] = snapshot.docs.map((d) => ({
+        ...d.data(),
+        id: d.id,
+      }));
       return users[0];
     } catch (error) {
       return null;
     }
   };
 
-  return { createUser, getUser };
+  const setUserDetails = async (id: string, user: any): Promise<any> => {
+    try {
+      await db.collection('users').doc(id).update(user);
+      return true;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  return { createUser, getUser, setUserDetails };
 }

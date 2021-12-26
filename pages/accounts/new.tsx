@@ -10,7 +10,8 @@ import AccountLayout from '../../components/AccountLayout';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import PvtRoute from '../../components/PvtRoute';
-import { Account, SocialIconType } from '../../types';
+import { Account, getTokenAPIRes, SocialIconType } from '../../types';
+import { request } from '../../lib/request';
 
 function SocialIcon({ type, color }: SocialIconType) {
   const fontsize = '40px';
@@ -25,6 +26,74 @@ function SocialIcon({ type, color }: SocialIconType) {
   }
 }
 
+function AccountBox({ item }: { item: Account }) {
+  const options = {
+    Twitter: async function () {
+      try {
+        const res: getTokenAPIRes = await request('api/getToken', {
+          method: 'POST',
+        });
+        const oauthToken = res.data.oauth_token;
+        const url =
+          'https://api.twitter.com/oauth/authenticate?oauth_token=' +
+          oauthToken;
+        window.location.href = url;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    Facebook: () => false,
+    Instagram: () => false,
+  };
+
+  const handleConnect = () => {
+    const fn = options[item.name];
+    fn && fn();
+  };
+
+  return (
+    <Box
+      w="250px"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      cursor={item.isAvailable ? 'pointer' : 'auto'}
+      boxShadow=".5px .5px 2px .5px rgba(0,0,0,0.2)"
+      _hover={{
+        borderColor: 'lightblue',
+      }}
+      opacity={item.isAvailable ? 1 : '.7'}
+      background={
+        !item.isAvailable
+          ? 'repeating-linear-gradient( 45deg, #f2f2f2, #f2f2f2 15px, #ddd 15px, #ddd 30px)'
+          : '#fff'
+      }
+      onClick={handleConnect}
+    >
+      <Box p="4" display="flex" flexDirection="column" alignItems="center">
+        <SocialIcon type={item.icon} color={item.iconColor} />
+        <Box
+          mt="1"
+          fontWeight="semibold"
+          as="h4"
+          lineHeight="tight"
+          isTruncated
+          fontSize="xl"
+        >
+          {item.name}
+        </Box>
+        <Box mt="1" color="gray.600" fontSize="sm">
+          {item.for}
+        </Box>
+
+        <Box mt="6" color="gray.600" fontSize="md">
+          Connect
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
 const Connect = () => {
   const { pathname } = useRouter();
   const accountsList: Account[] = [
@@ -33,18 +102,21 @@ const Connect = () => {
       for: 'Profile',
       icon: 'twitter',
       iconColor: 'rgb(85, 172, 238)',
+      isAvailable: true,
     },
     {
       name: 'Instagram',
       for: 'Business Account',
       icon: 'instagram',
       iconColor: '#E1306C',
+      isAvailable: false,
     },
     {
       name: 'Facebook',
       for: 'Page or Group',
       icon: 'facebook',
       iconColor: '#3b5998',
+      isAvailable: false,
     },
   ];
 
@@ -74,44 +146,7 @@ const Connect = () => {
 
           <Stack spacing={6} mt="6" direction="row">
             {accountsList.map((item: Account) => (
-              <Box
-                w="250px"
-                borderWidth="1px"
-                borderRadius="lg"
-                overflow="hidden"
-                cursor="pointer"
-                boxShadow=".5px .5px 2px .5px rgba(0,0,0,0.2)"
-                _hover={{
-                  borderColor: 'lightblue',
-                }}
-                key={item.name}
-              >
-                <Box
-                  p="4"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                >
-                  <SocialIcon type={item.icon} color={item.iconColor} />
-                  <Box
-                    mt="1"
-                    fontWeight="semibold"
-                    as="h4"
-                    lineHeight="tight"
-                    isTruncated
-                    fontSize="xl"
-                  >
-                    {item.name}
-                  </Box>
-                  <Box mt="1" color="gray.600" fontSize="sm">
-                    {item.for}
-                  </Box>
-
-                  <Box mt="6" color="gray.600" fontSize="md">
-                    Connect
-                  </Box>
-                </Box>
-              </Box>
+              <AccountBox item={item} key={item.name} />
             ))}
           </Stack>
         </Box>

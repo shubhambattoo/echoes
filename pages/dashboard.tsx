@@ -15,8 +15,7 @@ import DashboardLoading from '../components/DashboardLoading';
 import Layout from '../components/Layout';
 import NoConnection from '../components/NoConnection';
 import PvtRoute from '../components/PvtRoute';
-import { useAuth } from '../contexts/auth';
-import useUsers from '../lib/useUsers';
+import { useUser } from '../contexts/user';
 import { Status } from '../utils/enums';
 
 const Dashboard: React.FC = () => {
@@ -24,21 +23,18 @@ const Dashboard: React.FC = () => {
     accounts: [],
     status: Status.IDLE,
   });
-  const { loading, authUser } = useAuth();
-  const { getUser } = useUsers();
+  const { userDetails } = useUser();
 
   useEffect(() => {
-    if (!loading && authUser) {
+    if (userDetails) {
       setState((prev) => ({ ...prev, status: Status.PENDING }));
-      getUser(authUser.email).then((user) => {
-        setState((prev) => ({
-          ...prev,
-          status: Status.SUCCESS,
-          accounts: user.accountsConnected,
-        }));
-      });
+      setState((prev) => ({
+        ...prev,
+        status: Status.SUCCESS,
+        accounts: userDetails.accountsConnected,
+      }));
     }
-  }, [authUser, loading]);
+  }, [userDetails]);
 
   return (
     <Layout>

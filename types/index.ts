@@ -64,6 +64,7 @@ export type Account = {
   for: string;
   icon: string;
   iconColor: string;
+  isAvailable?: boolean;
 };
 
 export type Tweets = {
@@ -75,4 +76,13 @@ export type Tweets = {
   scheduledTime: Date;
   mediaId: string | Number;
   postId: string | Number;
+};
+
+export type getTokenAPIRes = {
+  success: boolean;
+  data: {
+    oauth_token: string;
+    oauth_token_secret: string;
+    oauth_callback_confirmed: string;
+  };
 };
